@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-xs-12 col-lg-12">
+    <h2>{{ fact.title }}</h2>
+</div>
+<div class="clearfix"></div>
+<hr/>
+
+<div class="col-xs-12 col-lg-12" style="margin-bottom:5px;">
+    <div class="text-center">
+         <img src="{{MEDIA_URL}}{{ fact.image.url }}" class="rounded" style="width: 100%"
+             alt="{{ fact.title|truncatechars:30 }}">
+    </div>
+    <p>{{ fact.body|safe }} </p>
+</div><!--/.col-xs-6.col-lg-4-->
+<div class="col-xs-12 col-lg-12">
+    <h2> From Newspapers</h2>
+</div>
+<div class="clearfix"></div>
+<hr/>
+{% for newspaper_post in fact.fact.all %}
+<div class="col-xs-6 col-lg-4" style="margin-bottom:5px;">
+    <div class="text-center">
+        <img width="250" height="150" src="{{ newspaper_post.image_link }}" class="rounded"
+             alt="{{ newspaper_post.title|truncatechars:30 }}">
+    </div>
+    <h3>{{ newspaper_post.title|truncatechars:30 }}</h3>
+    <p>{{ newspaper_post.body|safe|striptags|truncatechars_html:265 }} </p>
+    <p><a class="btn btn-info" href="/post/{{newspaper_post.id}}" role="button">Read details &raquo;</a></p>
+</div><!--/.col-xs-6.col-lg-4-->
+{% endfor %}
+{% endblock %}

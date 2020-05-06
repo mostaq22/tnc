@@ -1,0 +1,98 @@
+{% extends "full_base.html" %}
+{% block content %}
+
+<div class="col-xs-12 col-lg-6">
+    <h2>From Newspapers</h2>
+    <hr/>
+    {% for newspaper_post in posts %}
+    <div class="col-xs-12 col-lg-6" style="margin-bottom:5px;">
+        <div class="text-center">
+            <img width="250" height="150" src="{{ newspaper_post.image_link }}" class="rounded"
+                 alt="{{ newspaper_post.title|truncatechars:30 }}">
+        </div>
+        <h3>{{ newspaper_post.title|truncatechars:30 }}</h3>
+        <p>{{ newspaper_post.body|striptags|truncatechars:265 }} </p>
+        <p><a class="btn btn-info" href="/post/{{newspaper_post.id}}" role="button">Read details &raquo;</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+
+
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="clearfix"></div>
+    {% endif %}
+    {% endfor %}
+
+    {% if posts.has_other_pages %}
+  <ul class="pagination">
+    {% if posts.has_previous %}
+      <li><a href="?post_page={{ posts.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in posts.paginator.page_range %}
+      {% if posts.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?post_page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+      <li><a href="?post_page={{ posts.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+</div>
+
+<!-- Duplicate -->
+
+
+<div class="col-xs-12 col-lg-6">
+    <h2>Facts</h2>
+    <hr/>
+    {% for newspaper_post in posts %}
+    <div class="col-xs-12 col-lg-6" style="margin-bottom:5px;">
+        <div class="text-center">
+            <img width="250" height="150" src="{{ newspaper_post.image_link }}" class="rounded"
+                 alt="{{ newspaper_post.title|truncatechars:30 }}">
+        </div>
+        <h3>{{ newspaper_post.title|truncatechars:30 }}</h3>
+        <p>{{ newspaper_post.body|striptags|truncatechars:265 }} </p>
+        <p><a class="btn btn-info" href="/post/{{newspaper_post.id}}" role="button">Read details &raquo;</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+
+
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="clearfix"></div>
+    {% endif %}
+    {% endfor %}
+
+
+
+    {% if posts.has_other_pages %}
+  <ul class="pagination">
+    {% if posts.has_previous %}
+      <li><a href="?post_page={{ posts.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in posts.paginator.page_range %}
+      {% if posts.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?post_page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+      <li><a href="?post_page={{ posts.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+</div>
+
+
+{% endblock %}
