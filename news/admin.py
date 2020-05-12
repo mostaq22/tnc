@@ -36,14 +36,14 @@ class NewsPaperPostInline(admin.TabularInline):
     extra = 1
 
 
-class PostForm(forms.ModelForm):
+class FactForm(forms.ModelForm):
     body = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 
-class PostAdmin(admin.ModelAdmin):
+class FactAdmin(admin.ModelAdmin):
     list_display = ['title', 'body_content', 'category', 'image', 'show_in_homepage', 'likes']
     inlines = [NewsPaperPostInline, ]
-    form = PostForm
+    form = FactForm
 
     def image(self, obj):
         return mark_safe(f'<img height="50" width="50" src="{obj.image}"')
@@ -55,25 +55,25 @@ class PostAdmin(admin.ModelAdmin):
         return obj.like.all().count()
 
 
-admin.site.register(Fact, PostAdmin)
+admin.site.register(Fact, FactAdmin)
 
 
-class NewsPaperPostForm(forms.ModelForm):
+class PostForm(forms.ModelForm):
     body = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 
-class NewsPaperPostAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'fact', 'body_content', 'newspaper', 'show_in_homepage', 'likes']
-    form = NewsPaperPostForm
+    form = PostForm
 
     def body_content(self, obj):
         return mark_safe(obj.body[:25] + " ..")
 
     def likes(self, obj):
-        return obj.like.all().count()
+        return obj.like.count()
 
 
-admin.site.register(Post, NewsPaperPostAdmin)
+admin.site.register(Post, PostAdmin)
 
 
 class LikeAdmin(admin.ModelAdmin):

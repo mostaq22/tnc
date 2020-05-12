@@ -4,8 +4,6 @@
 p{
 text-align: justify;
 }
-
-
 </style>
 <div class="col-xs-12 col-lg-12">
     <h2>The Alternative Facts</h2>
@@ -20,7 +18,9 @@ text-align: justify;
     </div>
     <h3>{{ fact.title|truncatechars:30 }}</h3>
     <p>{{ fact.body|striptags|truncatechars:260 }} </p>
-    <p><a class="btn btn-info" href="fact/{{fact.id}}" role="button">Read details &raquo;</a></p>
+    <p><a class="btn btn-info" href="fact/{{fact.id}}" role="button">Read details &raquo;</a>
+        <a href="/like/fact/{{fact.id}}">Like ( {{ fact.like.count }} ) </a>
+    </p>
 </div><!--/.col-xs-6.col-lg-4-->
 {% if forloop.counter|divisibleby:3 %}
 <div class="clearfix"></div>
@@ -31,15 +31,16 @@ text-align: justify;
 </div>
 <div class="clearfix"></div>
 <hr/>
-{% for newspaper_post in newspaper_posts %}
+{% for post in posts %}
 <div class="col-xs-6 col-lg-4" style="margin-bottom:5px;">
     <div class="text-center">
-        <img width="250" height="100" src="{{ newspaper_post.newspaper.logo.url }}" class="rounded"
-             alt="{{ newspaper_post.title|truncatechars:30 }}">
+        <img width="250" height="100" src="{{ post.newspaper.logo.url }}" class="rounded"
+             alt="{{ post.title|truncatechars:30 }}">
     </div>
-    <h3>{{ newspaper_post.title|truncatechars:30 }}</h3>
-    <p>{{ newspaper_post.body|striptags|truncatechars:260 }} </p>
-    <p><a class="btn btn-info" href="post/{{newspaper_post.id}}" role="button">Read details &raquo;</a></p>
+    <h3>{{ post.title|truncatechars:30 }}</h3>
+    <p>{{ post.body|striptags|truncatechars:260 }} </p>
+    <p><a class="btn btn-info" href="post/{{post.id}}" role="button">Read details &raquo;</a> Like ( {{ post.like.count }} )</p>
+
 </div><!--/.col-xs-6.col-lg-4-->
 {% if forloop.counter|divisibleby:3 %}
 <div class="clearfix"></div>

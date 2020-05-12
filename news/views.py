@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Fact, Post
 
@@ -7,7 +8,7 @@ from .models import Fact, Post
 def homepage(request):
     context = {
         "facts": Fact.objects.filter(show_in_homepage=True)[:6],
-        "newspaper_posts": Post.objects.filter(show_in_homepage=True)[:6]
+        "posts": Post.objects.filter(show_in_homepage=True)[:6]
     }
     return render(request, template_name='pages/home.html', context=context)
 
@@ -47,3 +48,12 @@ def post_pagination(request, posts):
         posts = post_paginator.page(post_paginator.num_pages)
 
     return posts
+
+
+def hit_like(request, model, id):
+    print(request.META.get("REMOTE_ADDR"))
+    if model and id:
+        visitor_ip = request.META.get("REMOTE_ADDR")
+        
+
+    return HttpResponse("{status: 200}")
